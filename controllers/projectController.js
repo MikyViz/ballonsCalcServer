@@ -13,16 +13,27 @@ export default class projectController {
             res.status(500).json({msg: error.message});
         }
     }
+    static async getProjectsImg(req, res) {
+        try {
+            const img = await projectService.getProjectsImg(req, res);
+            if (img===undefined) {
+                return res.status(404).json({crap: "img not found🙈"});
+            }
+            res.status(200).sendFile(img.imgPath);
+        } catch (error) {
+            res.status(500).json({ghm: error.message});
+        }
+    }
 
     static async saveNewProjectFirst(req, res) {
         try {
-            const newProject = await projectService.saveNewProjectFirst(req.body);
+            const newProject = await projectService.saveNewProjectFirst(req);
             if (!newProject) {
                 return res.status(404).json({msg: "project was not saved... sory, bro¯\_(ツ)_/¯"});
             }
             res.status(200).json(newProject);
         } catch (error) {
-            res.status(500).json({msg: error.message});
+            res.status(500).json(`It's a little crap, bro 🥞 ${error}`);
         }
     }
 

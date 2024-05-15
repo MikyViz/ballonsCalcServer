@@ -2,50 +2,6 @@ import User from "./user-model.js"
 import sequelize from "../db-mysql.js";
 import { DataTypes, Model } from "sequelize";
 
-// class Menu extends Model {}
-// Menu.init(
-//   {
-//     category: {
-//       type: DataTypes.STRING,
-//       allowNull: true,
-//     },
-//     subcategory: {
-//       type: DataTypes.STRING,
-//       allowNull: true,
-//     },
-//     type: {
-//       type: DataTypes.STRING,
-//       allowNull: true,
-//     },
-//     quantity: {
-//       type: DataTypes.DOUBLE,
-//       allowNull: true,
-//     },
-//     price: {
-//       type: DataTypes.DOUBLE,
-//       allowNull: true,
-//     },
-//   },
-//   {
-//     sequelize,
-//     modelName: "menu",
-//   }
-// );
-
-// class ProjectStage extends Model {}
-// ProjectStage.init(
-//   {
-//     name: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//   },
-//   {
-//     sequelize,
-//     modelName: "projectStage",
-
-//   }
-// );
 class Materials extends Model { }
 Materials.init(
   {
@@ -133,7 +89,7 @@ Project.init(
     },
     stylesNum: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     imgPath: {
       type: DataTypes.STRING,
