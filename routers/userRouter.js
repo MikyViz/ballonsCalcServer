@@ -7,8 +7,8 @@ const router = express.Router();
 export default class UserRouter {
     constructor() {
         router.post('/login', userController.login);
+        router.post('/set', userController.set);
         router.post('/register', userController.register);
-        // router.get('/projects', auth , userController.getProjects);
         router.post('/me', auth, userController.me);
     }
 

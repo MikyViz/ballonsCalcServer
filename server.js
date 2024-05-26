@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({
     createParentPath: true}));
 
+app.use(express.static(path.join('./assets', "images")));
+
 app.use("/users", new UserRouter().getRouter());
 
 app.use("/data", new DataRouter().getRouter());

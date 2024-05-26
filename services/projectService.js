@@ -1,6 +1,9 @@
-import { Project, /*ProjectStage,*/ Materials, Work, General, /*Menu,*/ Category, Subcategory, Type } from "../database/index.js";
+import { Project, Materials, Work, General,} from "../database/index.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +18,6 @@ const getProjects = async (req, res) => {
       where: {
         UserId: req.user.id
       },
-      encclude: ['imgPath']
     });
     if (!projects) {
       throw new Error("projects is null or undefined");
@@ -28,26 +30,7 @@ const getProjects = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-const getProjectsImg = async (req, res) => {
-  console.log(req);
-  try {
-    const img = await Project.findOne({
-      where: {
-        id: req.body.id
-      },
-      attributes: ['imgPath'],
-    });
-    if (img===undefined) {
-      throw new Error("img is undefined");
-    }
-    console.log('you did it! the img is:', img);
-    return img;
-  } catch (error) {
-    console.error(error);
-    return error
-    // res.status(500).send('Internal Server Error');
-  }
-};
+
 const saveNewProjectFirst = async (req) => {
   try {
     console.log('req:', req);
@@ -59,22 +42,18 @@ const saveNewProjectFirst = async (req) => {
     newProject.deviationPercentage = parseInt(newProject.deviationPercentage);
     newProject.discountPercent = parseInt(newProject.discountPercent);
     newProject.UserId = req.user.id;
-    let imgPath = null;
     if (req.files && Object.keys(req.files).length !== 0) {
       let imgData = req.files.imgPath;
-      imgPath = parentDir + '\\assets\\images\\' + imgData.name;
-      imgData.mv(imgPath, function (err) {
+      imgData.mv(path.join(parentDir ,imgData.name) , function (err) {
         if (err) {
           console.log(`It's a little crap, bro 🥞 ${err}`);
           throw new Error(`It's a little crap, bro 🥞 ${err}`);
         }
-        console.log('Yah!🕺You did it! The file has been saved to: ' + imgPath);
+        console.log('Yah!🕺You did it! The file has been saved to: ' + imgData.name);
       });
 
-    } else {
-      imgPath = null;
     }
-    newProject.imgPath = imgPath;
+    newProject.imgPath = path.join(`localhost:${process.env.MY_PORT}`, imgData.name);
 
     const project = await Project.create(newProject);
     if (project) {

@@ -7,7 +7,6 @@ const router = express.Router();
 export default class projectRouter {
     constructor() {
         router.get('/getProjects', auth, projectController.getProjects);
-        router.get('/getProjectsImg', auth, projectController.getProjectsImg);
         router.post('/saveNewProject1', auth, projectController.saveNewProjectFirst);
         router.post('/saveNewProject2', auth, projectController.saveNewProjectSecond);
         router.post('/saveNewProject3', auth, projectController.saveNewProjectThird);

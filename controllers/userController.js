@@ -14,6 +14,19 @@ export default class UserController {
         }
     }
 
+    static async set(req, res) {
+        try {
+            // const user = await userService.login(req.body);
+            // if (!user) {
+            //     return res.status(404).json({msg: "User not found🙈"});
+            // }
+            // res.status(200).json(user);
+            console.log(req);
+        } catch (error) {
+            res.status(500).json({msg: error.message});
+        }
+    }
+
     static async register(req, res) {
         try {
             const user = await userService.register(req.body);

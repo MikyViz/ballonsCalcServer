@@ -110,8 +110,6 @@ Project.init(
   }
 );
 
-// Project.hasMany(ProjectStage);
-// ProjectStage.belongsTo(Project);
 Project.hasMany(Materials);
 Materials.belongsTo(Project);
 
@@ -121,20 +119,8 @@ Work.belongsTo(Project);
 Project.hasMany(General);
 General.belongsTo(Project);
 
-// ProjectStage.hasMany(Menu);
-// Menu.belongsTo(ProjectStage);
-
-// Materials.hasMany(Menu);
-// Menu.belongsTo(Materials);
-
-// Work.hasMany(Menu);
-// Menu.belongsTo(Work);
-
-// General.hasMany(Menu);
-// Menu.belongsTo(General);
-
 User.hasMany(Project);
 Project.belongsTo(User);
 
 
-export { Project, /*ProjectStage,*/ Materials, Work, General/*, Menu */ };
+export { Project, Materials, Work, General};
