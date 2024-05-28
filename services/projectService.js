@@ -1,4 +1,4 @@
-import { Project, Materials, Work, General,} from "../database/index.js";
+import { Project, Materials, Work, General, } from "../database/index.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from "dotenv";
@@ -38,31 +38,29 @@ const saveNewProjectFirst = async (req) => {
     console.log('req.files:', req.files);
 
     let newProject = req.body;
-    newProject.stylesNum = "null" ? null : parseInt(newProject.stylesNum);
+    newProject.stylesNum = (newProject.stylesNum === "null") ? null : parseInt(newProject.stylesNum);
     newProject.deviationPercentage = parseInt(newProject.deviationPercentage);
     newProject.discountPercent = parseInt(newProject.discountPercent);
     newProject.UserId = req.user.id;
     if (req.files && Object.keys(req.files).length !== 0) {
       let imgData = req.files.imgPath;
-      imgData.mv(path.join(parentDir ,imgData.name) , function (err) {
-        if (err) {
-          console.log(`It's a little crap, bro 🥞 ${err}`);
-          throw new Error(`It's a little crap, bro 🥞 ${err}`);
-        }
+      const imgPath = path.join(parentDir, 'assets', 'images', imgData.name);
+    try {
+      await imgData.mv(imgPath);
+      newProject.imgPath = `http://localhost:${process.env.MY_PORT}/${imgData.name}`;
+
+      const project = await Project.create(newProject);
+      if (project) {
         console.log('Yah!🕺You did it! The file has been saved to: ' + imgData.name);
-      });
-
+        return project;
+      }
+      return null;
+    } catch (err) {
+      console.log(`It's a little crap, bro 🥞, your file wos not moved 👉 ${err}`);
+      throw new Error(`It's a little crap, bro 🥞, your file wos not moved 👉 ${err}`);
     }
-    newProject.imgPath = path.join(`localhost:${process.env.MY_PORT}`, imgData.name);
-
-    const project = await Project.create(newProject);
-    if (project) {
-      // await project.save();
-      console.log("good job👌1");
-      return project;
-    }
-    return null;
-  } catch (error) {
+  }
+} catch (error) {
     console.log(`👽hey doc... we have a little problem👉 ${error}`);
     throw new Error(error);
   }
@@ -109,7 +107,6 @@ const saveNewProjectFourth = async (newProjectGeneral) => {
 
 export default {
   getProjects,
-  getProjectsImg,
   saveNewProjectFirst,
   saveNewProjectSecond,
   saveNewProjectThird,
