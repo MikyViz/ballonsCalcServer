@@ -56,8 +56,8 @@ const saveNewProjectFirst = async (req) => {
       }
       return null;
     } catch (err) {
-      console.log(`It's a little crap, bro 🥞, your file wos not moved 👉 ${err}`);
-      throw new Error(`It's a little crap, bro 🥞, your file wos not moved 👉 ${err}`);
+      console.log(`It's a little crap, bro 🥞, your file was not moved 👉 ${err}`);
+      throw new Error(`It's a little crap, bro 🥞, your file was not moved 👉 ${err}`);
     }
   }
 } catch (error) {

@@ -24,14 +24,14 @@ const User = sequelize.define("User", {
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: true,
-            len: [10, 35],
+            // isEmail: true,
+            // len: [10, 35],
         },
     },
     phone: {
         type: DataTypes.STRING,
         validate: {
-            len: [10, 18]
+            // len: [10, 18]
         },
     },
     img: {
@@ -43,7 +43,7 @@ const User = sequelize.define("User", {
         allowNull: false,
 
         validate: {
-            len: [6, 35],
+            len: [6, 200],
         },
     },
     token: {
@@ -66,7 +66,13 @@ const User = sequelize.define("User", {
         beforeCreate: async (user) => {
             const saltRounds = 10;
             user.password = await bcrypt.hash(user.password, saltRounds);
-        }
+        },
+        // beforeUpdate: async (user) => {
+        //     if (user.password){
+        //     const saltRounds = 10;
+        //     user.password = await bcrypt.hash(user.password, saltRounds);
+        // }
+        // }
     }
 });
 

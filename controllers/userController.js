@@ -16,12 +16,14 @@ export default class UserController {
 
     static async set(req, res) {
         try {
-            // const user = await userService.login(req.body);
-            // if (!user) {
-            //     return res.status(404).json({msg: "User not found🙈"});
-            // }
-            // res.status(200).json(user);
-            console.log(req);
+            const user = await userService.set(req);
+            if (!user) {
+                return res.status(404).json({msg: "User not found🙈"});
+            }
+            res.status(200).json(user);
+            console.log(req.body);
+            console.log(req.files);
+            res.json('aloha🤙')
         } catch (error) {
             res.status(500).json({msg: error.message});
         }
@@ -51,16 +53,4 @@ export default class UserController {
             res.status(500).json({msg: error.message});
         }
     }
-
-    // static async getProjects(req, res) {
-    //     try {
-    //         const project = await userService.getprojects(req, res);
-    //         if (!project) {
-    //             return res.status(404).json({msg: "projects not found🙈"});
-    //         }
-    //         res.status(200).json(project);
-    //     } catch (error) {
-    //         res.status(500).json({msg: error.message});
-    //     }
-    // }
 }
